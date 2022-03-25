@@ -20,6 +20,7 @@ Each of these components renders some markup, and either an image or some fetche
 
 This is a fairly minimalist application.
 I'm using TailwindCSS, and borrowing some rough component models from TailwindUI.
+It still looks a bit ugly, but it does everything that it should do. I ended-up using a background color for the JSON error as well.
 
 # Implementation Plan
 

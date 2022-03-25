@@ -149,6 +149,9 @@ function App() {
     <div className="h-full flex">
       <div className="flex flex-col min-w-0 flex-1 overflow-hidden">
         <div className="flex items-center justify-between bg-gray-50 border-b border-gray-200 px-4 py-1.5">
+          {error && (
+            <span>It looks like something is not right with your JSON.</span>
+          )}
           <textarea
             className={classNames(
               error === false ? "bg-neutral-50" : "bg-red-50",
