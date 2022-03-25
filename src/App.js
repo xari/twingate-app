@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
@@ -10,18 +10,42 @@ function classNames(...classes) {
 function Hero({ imageURI }) {
   return (
     <div>
-      <img src={imageURI} />
+      <img src={imageURI} className="object-cover h-48 w-96 mx-auto" />
     </div>
   );
 }
 
 function ImgTxt({ imageURI, text, title, leftToRight }) {
+  const imgStyle = { backgroundImage: `url(${imageURI})` };
+  const image = (
+    <div
+      className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+      style={imgStyle}
+      title={title}
+    ></div>
+  );
+  const content = (
+    <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+      <div className="mb-8">
+        <div className="text-gray-900 font-bold text-xl mb-2">{title}</div>
+        <p className="text-gray-700 text-base">{text}</p>
+      </div>
+    </div>
+  );
+
   return (
-    <div>
-      <img src={imageURI} />
-      <h1>{title}</h1>
-      <p>{text}</p>
-      <span>{leftToRight}</span>
+    <div className="w-full lg:max-w-full lg:flex">
+      {leftToRight ? (
+        <>
+          {image}
+          {content}
+        </>
+      ) : (
+        <>
+          {content}
+          {image}
+        </>
+      )}
     </div>
   );
 }
@@ -51,7 +75,7 @@ function Data({ url }) {
   } else if (!isLoaded) {
     return <div>Loading...</div>;
   } else {
-    return <ul>{data}</ul>;
+    return <div className="container truncate break-words">{data}</div>;
   }
 }
 
@@ -122,41 +146,49 @@ function App() {
   );
 
   return (
-    <div>
-      <div
-        className={classNames(
-          error === false ? "bg-indigo-500" : "bg-red-500",
-          "p-3"
-        )}
-      >
-        <textarea
-          cols={50}
-          rows={30}
-          defaultValue={JSONStr}
-          onBlur={handleBlur}
-        ></textarea>
+    <div className="h-full flex">
+      <div className="flex flex-col min-w-0 flex-1 overflow-hidden">
+        <div className="flex items-center justify-between bg-gray-50 border-b border-gray-200 px-4 py-1.5">
+          <textarea
+            className={classNames(
+              error === false ? "bg-neutral-50" : "bg-red-50",
+              "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            )}
+            cols={50}
+            rows={30}
+            defaultValue={JSONStr}
+            onBlur={handleBlur}
+          ></textarea>
+        </div>
+
         <h1>Editor</h1>
       </div>
 
-      <div>
-        <div>
-          {JSON.parse(JSONStr).map((props, i) => {
-            switch (props.type) {
-              case "hero":
-                return <Hero key={i} {...props} />;
-                break;
-              case "image-text":
-                return <ImgTxt key={i} {...props} />;
-                break;
-              case "data":
-                return <Data key={i} {...props} />;
-                break;
-              default:
-                console.log(`Non standard type`);
-            }
-          })}
-        </div>
-        <h1>Marketing Landing Page</h1>
+      <div className="flex-1 relative z-0 flex overflow-hidden">
+        <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none xl:order-last">
+          {/* Start main area*/}
+          <div className="absolute inset-0 py-6 px-4 sm:px-6 lg:px-8">
+            <div className="h-full border-2 border-gray-200 border-dashed rounded-lg">
+              {JSON.parse(JSONStr).map((props, i) => {
+                switch (props.type) {
+                  case "hero":
+                    return <Hero key={i} {...props} />;
+                    break;
+                  case "image-text":
+                    return <ImgTxt key={i} {...props} />;
+                    break;
+                  case "data":
+                    return <Data key={i} {...props} />;
+                    break;
+                  default:
+                    console.log(`Non standard type`);
+                }
+              })}
+            </div>
+            <h1>Marketing Landing Page</h1>
+          </div>
+          {/* End main area */}
+        </main>
       </div>
     </div>
   );
