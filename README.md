@@ -1,6 +1,6 @@
 # Twingate App
 
-![./public/demo.png](Screenshot)
+![Screenshot](./public/demo.png)
 
 ## Spec
 
