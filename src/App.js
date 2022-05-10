@@ -1,5 +1,4 @@
 import { useState, useCallback, useEffect } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
 // For conveniently melding conditional styles and default styles
