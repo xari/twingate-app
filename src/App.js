@@ -7,78 +7,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function Hero({ imageURI }) {
-  return (
-    <div>
-      <img src={imageURI} className="object-cover h-48 w-96 mx-auto" />
-    </div>
-  );
-}
-
-function ImgTxt({ imageURI, text, title, leftToRight }) {
-  const imgStyle = { backgroundImage: `url(${imageURI})` };
-  const image = (
-    <div
-      className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
-      style={imgStyle}
-      title={title}
-    ></div>
-  );
-  const content = (
-    <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-      <div className="mb-8">
-        <div className="text-gray-900 font-bold text-xl mb-2">{title}</div>
-        <p className="text-gray-700 text-base">{text}</p>
-      </div>
-    </div>
-  );
-
-  return (
-    <div className="w-full lg:max-w-full lg:flex">
-      {leftToRight ? (
-        <>
-          {image}
-          {content}
-        </>
-      ) : (
-        <>
-          {content}
-          {image}
-        </>
-      )}
-    </div>
-  );
-}
-
-function Data({ url }) {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState();
-
-  useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setIsLoaded(true);
-          setData(JSON.stringify(result));
-        },
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-        }
-      );
-  }, []);
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  } else if (!isLoaded) {
-    return <div>Loading...</div>;
-  } else {
-    return <div className="container truncate break-words">{data}</div>;
-  }
-}
-
 function isJsonString(str) {
   try {
     JSON.parse(str);
@@ -93,6 +21,75 @@ function prettyPrint(str) {
   const pretty = JSON.stringify(obj, undefined, 4);
 
   return pretty;
+}
+
+function Hero({ imageURI }) {
+  return (
+    <div>
+      <img src={imageURI} className="object-cover h-48 w-full" />
+    </div>
+  );
+}
+
+function ImgTxt({ imageURI, text, title, leftToRight }) {
+  const imgStyle = { backgroundImage: `url(${imageURI})` };
+  const image = (
+    <div
+      className="h-full w-full bg-cover bg-center"
+      style={imgStyle}
+      title={title}
+    ></div>
+  );
+  const textContent = (
+    <div className="h-48 p-5">
+      <div className="font-bold text-xl mb-2">{title}</div>
+      <p>{text}</p>
+    </div>
+  );
+
+  return (
+    <>
+      {leftToRight ? (
+        <div className="grid grid-cols-2 w-full">
+          {image}
+          {textContent}
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 w-full text-right">
+          {textContent}
+          {image}
+        </div>
+      )}
+    </>
+  );
+}
+
+function getFetchData(url) {
+  return function fetchData(callback) {
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        callback(JSON.stringify(data));
+      })
+      .catch((error) => {
+        callback(`${error.toString()} — Will try again after 5 seconds.`);
+
+        setTimeout(() => {
+          fetchData(callback);
+        }, 5000);
+      });
+  };
+}
+
+function Data({ url }) {
+  const [content, setContent] = useState("Loading...");
+  const fetchData = useCallback(getFetchData(url), [url]);
+
+  useEffect(() => {
+    fetchData(setContent);
+  }, [fetchData]);
+
+  return <div className="p-5 truncate break-words">{content} </div>;
 }
 
 function App() {
@@ -146,52 +143,39 @@ function App() {
   );
 
   return (
-    <div className="h-full flex">
-      <div className="flex flex-col min-w-0 flex-1 overflow-hidden">
-        <div className="flex items-center justify-between bg-gray-50 border-b border-gray-200 px-4 py-1.5">
-          {error && (
-            <span>It looks like something is not right with your JSON.</span>
+    <div className="grid grid-cols-2">
+      <div className="">
+        {error && (
+          <span>It looks like something is not right with your JSON.</span>
+        )}
+        <textarea
+          className={classNames(
+            error === false ? "bg-neutral-50" : "bg-red-50",
+            "h-screen w-full block"
           )}
-          <textarea
-            className={classNames(
-              error === false ? "bg-neutral-50" : "bg-red-50",
-              "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-            )}
-            cols={50}
-            rows={30}
-            defaultValue={JSONStr}
-            onBlur={handleBlur}
-          ></textarea>
-        </div>
-
-        <h1>Editor</h1>
+          cols={50}
+          rows={30}
+          defaultValue={JSONStr}
+          onBlur={handleBlur}
+          style={{ resize: "none" }}
+        ></textarea>
       </div>
-
-      <div className="flex-1 relative z-0 flex overflow-hidden">
-        <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none xl:order-last">
-          {/* Start main area*/}
-          <div className="absolute inset-0 py-6 px-4 sm:px-6 lg:px-8">
-            <div className="h-full border-2 border-gray-200 border-dashed rounded-lg">
-              {JSON.parse(JSONStr).map((props, i) => {
-                switch (props.type) {
-                  case "hero":
-                    return <Hero key={i} {...props} />;
-                    break;
-                  case "image-text":
-                    return <ImgTxt key={i} {...props} />;
-                    break;
-                  case "data":
-                    return <Data key={i} {...props} />;
-                    break;
-                  default:
-                    console.log(`Non standard type`);
-                }
-              })}
-            </div>
-            <h1>Marketing Landing Page</h1>
-          </div>
-          {/* End main area */}
-        </main>
+      <div className="">
+        {JSON.parse(JSONStr).map((props, i) => {
+          switch (props.type) {
+            case "hero":
+              return <Hero key={i} {...props} />;
+              break;
+            case "image-text":
+              return <ImgTxt key={i} {...props} />;
+              break;
+            case "data":
+              return <Data key={i} {...props} />;
+              break;
+            default:
+              return <span>Non standard type</span>;
+          }
+        })}
       </div>
     </div>
   );
