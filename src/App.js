@@ -1,107 +1,9 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
+import { classNames, isJsonString, prettyPrint } from "./utils";
+import Hero from "./Hero";
+import ImgTxt from "./ImgTxt";
+import Data from "./Data";
 import "./App.css";
-
-// For conveniently melding conditional styles and default styles
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
-function isJsonString(str) {
-  try {
-    JSON.parse(str);
-  } catch (e) {
-    return false;
-  }
-  return true;
-}
-
-function prettyPrint(str) {
-  const obj = JSON.parse(str);
-  const pretty = JSON.stringify(obj, undefined, 4);
-
-  return pretty;
-}
-
-function Hero({ imageURI }) {
-  return (
-    <div>
-      <img src={imageURI} className="object-cover h-48 w-full" />
-    </div>
-  );
-}
-
-function ImgTxt({ imageURI, text, title, leftToRight }) {
-  const imgStyle = { backgroundImage: `url(${imageURI})` };
-  const image = (
-    <div
-      className="h-full w-full bg-cover bg-center"
-      style={imgStyle}
-      title={title}
-    ></div>
-  );
-  const textContent = (
-    <div className="h-48 p-5">
-      <div className="font-bold text-xl mb-2">{title}</div>
-      <p>{text}</p>
-    </div>
-  );
-
-  return (
-    <>
-      {leftToRight ? (
-        <div className="grid grid-cols-2 w-full">
-          {image}
-          {textContent}
-        </div>
-      ) : (
-        <div className="grid grid-cols-2 w-full text-right">
-          {textContent}
-          {image}
-        </div>
-      )}
-    </>
-  );
-}
-
-function getFetchData(url) {
-  return function fetchData(callback) {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        callback(JSON.stringify(data, null, "\t"));
-      })
-      .catch((error) => {
-        callback(`${error.toString()} — Will try again after 5 seconds.`);
-
-        setTimeout(() => {
-          fetchData(callback);
-        }, 5000);
-      });
-  };
-}
-
-function Data({ url }) {
-  const [content, setContent] = useState("Loading...");
-  const fetchData = useCallback(getFetchData(url), [url]);
-
-  useEffect(() => {
-    fetchData(setContent);
-  }, [fetchData]);
-
-  return (
-    <div className="grid grid-cols-5 gap-4 overflow-hidden">
-      <div className="col-span-1">
-        <button
-          type="button"
-          className="items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Refresh
-        </button>
-      </div>
-      <pre className="">{content}</pre>
-    </div>
-  );
-}
 
 function App() {
   const [error, setError] = useState(false);
@@ -131,7 +33,7 @@ function App() {
         },
         {
           type: "data",
-          url: "https://api.publicapis.org/entries",
+          url: "https://api.publicapis.org/random",
         },
       ])
     )

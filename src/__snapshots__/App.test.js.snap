@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the App 1`] = `
+<div
+  className="grid grid-cols-2"
+>
+  <div
+    className=""
+  >
+    <textarea
+      className="bg-neutral-50 h-screen w-full block"
+      cols={50}
+      defaultValue="[
+    {
+        \\"type\\": \\"hero\\",
+        \\"imageURI\\": \\"https://images.unsplash.com/photo-1579963333765-b4129b3250fc\\"
+    },
+    {
+        \\"type\\": \\"image-text\\",
+        \\"imageURI\\": \\"https://images.unsplash.com/photo-1579963333765-b4129b3250fc\\",
+        \\"text\\": \\"Sunrise from the ground......\\",
+        \\"title\\": \\"Beach\\",
+        \\"leftToRight\\": true
+    },
+    {
+        \\"type\\": \\"image-text\\",
+        \\"imageURI\\": \\"https://images.unsplash.com/photo-1579963333765-b4129b3250fc\\",
+        \\"text\\": \\"Sunset from the sky......\\",
+        \\"title\\": \\"Airplane\\",
+        \\"leftToRight\\": false
+    },
+    {
+        \\"type\\": \\"data\\",
+        \\"url\\": \\"https://api.publicapis.org/random\\"
+    }
+]"
+      onBlur={[Function]}
+      rows={30}
+      style={
+        Object {
+          "resize": "none",
+        }
+      }
+    />
+  </div>
+  <div
+    className=""
+  >
+    <div>
+      <img
+        className="object-cover h-48 w-full"
+        src="https://images.unsplash.com/photo-1579963333765-b4129b3250fc"
+      />
+    </div>
+    <div
+      className="grid grid-cols-2 w-full"
+    >
+      <div
+        className="h-full w-full bg-cover bg-center"
+        style={
+          Object {
+            "backgroundImage": "url(https://images.unsplash.com/photo-1579963333765-b4129b3250fc)",
+          }
+        }
+        title="Beach"
+      />
+      <div
+        className="h-48 p-5"
+      >
+        <div
+          className="font-bold text-xl mb-2"
+        >
+          Beach
+        </div>
+        <p>
+          Sunrise from the ground......
+        </p>
+      </div>
+    </div>
+    <div
+      className="grid grid-cols-2 w-full text-right"
+    >
+      <div
+        className="h-48 p-5"
+      >
+        <div
+          className="font-bold text-xl mb-2"
+        >
+          Airplane
+        </div>
+        <p>
+          Sunset from the sky......
+        </p>
+      </div>
+      <div
+        className="h-full w-full bg-cover bg-center"
+        style={
+          Object {
+            "backgroundImage": "url(https://images.unsplash.com/photo-1579963333765-b4129b3250fc)",
+          }
+        }
+        title="Airplane"
+      />
+    </div>
+    <div
+      className="grid grid-cols-5 gap-4 h-48 p-1 overflow-hidden"
+    >
+      <div
+        className="col-span-1"
+      >
+        <button
+          className="items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          onClick={[Function]}
+          type="button"
+        >
+          Refresh
+        </button>
+      </div>
+      <pre
+        className=""
+      >
+        Loading...
+      </pre>
+    </div>
+  </div>
+</div>
+`;
