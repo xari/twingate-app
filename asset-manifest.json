@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/twingate-app/static/css/main.753b2ead.css",
-    "main.js": "/twingate-app/static/js/main.69d4da7b.js",
+    "main.css": "/twingate-app/static/css/main.8b4cfe3b.css",
+    "main.js": "/twingate-app/static/js/main.3057cea3.js",
     "static/js/787.a0511249.chunk.js": "/twingate-app/static/js/787.a0511249.chunk.js",
     "index.html": "/twingate-app/index.html",
-    "main.753b2ead.css.map": "/twingate-app/static/css/main.753b2ead.css.map",
-    "main.69d4da7b.js.map": "/twingate-app/static/js/main.69d4da7b.js.map",
+    "main.8b4cfe3b.css.map": "/twingate-app/static/css/main.8b4cfe3b.css.map",
+    "main.3057cea3.js.map": "/twingate-app/static/js/main.3057cea3.js.map",
     "787.a0511249.chunk.js.map": "/twingate-app/static/js/787.a0511249.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.753b2ead.css",
-    "static/js/main.69d4da7b.js"
+    "static/css/main.8b4cfe3b.css",
+    "static/js/main.3057cea3.js"
   ]
 }
