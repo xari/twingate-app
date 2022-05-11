@@ -68,7 +68,7 @@ function getFetchData(url) {
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        callback(JSON.stringify(data));
+        callback(JSON.stringify(data, null, "\t"));
       })
       .catch((error) => {
         callback(`${error.toString()} — Will try again after 5 seconds.`);
@@ -88,7 +88,19 @@ function Data({ url }) {
     fetchData(setContent);
   }, [fetchData]);
 
-  return <div className="p-5 truncate break-words">{content} </div>;
+  return (
+    <div className="grid grid-cols-5 gap-4 overflow-hidden">
+      <div className="col-span-1">
+        <button
+          type="button"
+          className="items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Refresh
+        </button>
+      </div>
+      <pre className="">{content}</pre>
+    </div>
+  );
 }
 
 function App() {
