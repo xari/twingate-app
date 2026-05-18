@@ -7,6 +7,8 @@ export function isJsonString(str) {
   try {
     JSON.parse(str);
   } catch (e) {
+    // str is not valid JSON, return false
+    console.debug(`Invalid JSON string: ${e.message}`);
     return false;
   }
   return true;
