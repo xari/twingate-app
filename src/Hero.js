@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export default function Hero({ imageURI }) {
   return (
     <div>
@@ -5,3 +7,7 @@ export default function Hero({ imageURI }) {
     </div>
   );
 }
+
+Hero.propTypes = {
+  imageURI: PropTypes.string,
+};

@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
+import PropTypes from "prop-types";
 import { getFetchData } from "./utils";
 
 export default function Data({ url }) {
@@ -24,3 +25,7 @@ export default function Data({ url }) {
     </div>
   );
 }
+
+Data.propTypes = {
+  url: PropTypes.string.isRequired,
+};
