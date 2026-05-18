@@ -74,17 +74,15 @@ function App() {
         ></textarea>
       </div>
       <div className="">
-        {JSON.parse(JSONStr).map((props, i) => {
+        {JSON.parse(JSONStr).map((props) => {
+          const uniqueKey = `${props.type}-${props.title || props.url || props.imageURI}`;
           switch (props.type) {
             case "hero":
-              return <Hero key={i} {...props} />;
-              break;
+              return <Hero key={uniqueKey} {...props} />;
             case "image-text":
-              return <ImgTxt key={i} {...props} />;
-              break;
+              return <ImgTxt key={uniqueKey} {...props} />;
             case "data":
-              return <Data key={i} {...props} />;
-              break;
+              return <Data key={uniqueKey} {...props} />;
             default:
               return <span>Non standard type</span>;
           }
