@@ -11,11 +11,13 @@ function App() {
     prettyPrint(
       JSON.stringify([
         {
+          id: "hero-1",
           type: "hero",
           imageURI:
             "https://images.unsplash.com/photo-1579963333765-b4129b3250fc",
         },
         {
+          id: "image-text-1",
           type: "image-text",
           imageURI:
             "https://images.unsplash.com/photo-1579963333765-b4129b3250fc",
@@ -24,6 +26,7 @@ function App() {
           leftToRight: true,
         },
         {
+          id: "image-text-2",
           type: "image-text",
           imageURI:
             "https://images.unsplash.com/photo-1579963333765-b4129b3250fc",
@@ -32,6 +35,7 @@ function App() {
           leftToRight: false,
         },
         {
+          id: "data-1",
           type: "data",
           url: "https://api.publicapis.org/random",
         },
@@ -74,19 +78,16 @@ function App() {
         ></textarea>
       </div>
       <div className="">
-        {JSON.parse(JSONStr).map((props, i) => {
-          switch (props.type) {
+        {JSON.parse(JSONStr).map((item) => {
+          switch (item.type) {
             case "hero":
-              return <Hero key={i} {...props} />;
-              break;
+              return <Hero key={item.id} {...item} />;
             case "image-text":
-              return <ImgTxt key={i} {...props} />;
-              break;
+              return <ImgTxt key={item.id} {...item} />;
             case "data":
-              return <Data key={i} {...props} />;
-              break;
+              return <Data key={item.id} {...item} />;
             default:
-              return <span>Non standard type</span>;
+              return <span key={item.id}>Non standard type</span>;
           }
         })}
       </div>
