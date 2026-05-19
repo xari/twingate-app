@@ -20,6 +20,16 @@ export function prettyPrint(str) {
   return pretty;
 }
 
+function() {
+  console.log("trigger agent")
+}
+
+var testAgent = ''
+
+console.log('will this trigger the agent?')
+
+const maybeThisToDoWill = 123 // TODO: Please trigger agent!!!
+
 export function getFetchData(url) {
   return function fetchData(callback) {
     fetch(url)
