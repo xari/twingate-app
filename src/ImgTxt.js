@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export default function ImgTxt({ imageURI, text, title, leftToRight }) {
   const imgStyle = { backgroundImage: `url(${imageURI})` };
   const image = (
@@ -30,3 +32,10 @@ export default function ImgTxt({ imageURI, text, title, leftToRight }) {
     </>
   );
 }
+
+ImgTxt.propTypes = {
+  imageURI: PropTypes.string,
+  text: PropTypes.string,
+  title: PropTypes.string,
+  leftToRight: PropTypes.bool,
+};
